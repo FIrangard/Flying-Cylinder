@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="flying_cylinder_world">
+
+	<physics name="4ms" type="ode">
+	  <max_step_size>0.004</max_step_size>
+	  <real_time_factor>1.0</real_time_factor>
+	</physics>
+
+	<plugin
+	  filename="gz-sim-physics-system"
+	  name="gz::sim::systems::Physics">
+	</plugin>
+
+	<plugin
+	  filename="gz-sim-scene-broadcaster-system"
+	  name="gz::sim::systems::SceneBroadcaster">
+	</plugin>
+
+	<plugin
+	  filename="gz-sim-user-commands-system"
+	  name="gz::sim::systems::UserCommands">
+	</plugin>
+
+	<plugin
+	  filename="gz-sim-sensors-system"
+	  name="gz::sim::systems::Sensors">
+	  <render_engine>ogre2</render_engine>
+	</plugin>
+
+	<plugin
+	  filename="gz-sim-imu-system"
+	  name="gz::sim::systems::Imu">
+	</plugin>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://flying_cylinder</uri>
+      <pose>0 0 0 0 0 0</pose>
+
+	  <plugin
+	  filename="gz-sim-multicopter-motor-model-system"
+	  name="gz::sim::systems::MulticopterMotorModel">
+        <robotNamespace>flying_cylinder</robotNamespace>
+        <jointName>rotor_0_joint</jointName>
+        <linkName>rotor_0</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>2000.0</maxRotVelocity>
+        <motorConstant>1.5e-05</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>0</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/0</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+        <motorType>velocity</motorType>
+      </plugin>
+      
+      <plugin
+        filename="ignition-gazebo-multicopter-motor-model-system"
+        name="ignition::gazebo::systems::MulticopterMotorModel">
+        <robotNamespace>flying_cylinder</robotNamespace>
+        <jointName>rotor_1_joint</jointName>
+        <linkName>rotor_1</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>2000.0</maxRotVelocity>
+        <motorConstant>1.5e-05</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>0</motorNumber>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>motor_speed/1</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+        <motorType>velocity</motorType>
+      </plugin>
+    </include>
+
+  </world>
+</sdf>
